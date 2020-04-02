@@ -21,6 +21,7 @@ const Shop = () => {
             product.quantity = savedCart[existingKey];
             return product;
         })
+        console.log(setProducts);
         setCart(previousCart);
         const cartProducts = productKeys.map(key => {
             const product = fakeData.find(pd => pd.key === key);

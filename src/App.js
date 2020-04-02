@@ -12,16 +12,16 @@ import Review from './components/Review/Review';
 import NoMatch from './components/NoMatch/NoMatch';
 import ProductDetail from './components/ProductDetail/ProductDetail';
 import Login from './components/Login/Login';
-import { createContext } from 'react';
+import { AuthContextProvider, PrivateRoute } from './components/Login/useAuth';
+import Shipment from './components/Shipment/Shipment';
 
-export const UserContext = createContext();
 
 
 function App() {
-  const user = {name: 'koduMia', Email: 'kodumia@gmail.com'}
+  // const user = {name: 'koduMia', Email: 'kodumia@gmail.com'}
   return (
-    <div>
-      <UserContext.Provider value={user.name}>
+    <>
+      <AuthContextProvider>
         <Header></Header>
         <Router>
           <Switch>
@@ -40,13 +40,16 @@ function App() {
             <Route path="/login">
               <Login></Login>
             </Route>
+            <PrivateRoute path="/shipment">
+              <Shipment></Shipment>
+            </PrivateRoute>
             <Route path="*">
               <NoMatch></NoMatch>
             </Route>
           </Switch>
         </Router>
-      </UserContext.Provider>
-    </div>
+      </AuthContextProvider>
+    </>
   );
 }
 

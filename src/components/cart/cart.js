@@ -1,12 +1,11 @@
-import React, { useContext } from 'react';
-import { UserContext } from '../../App';
+import React from 'react';
 
 
 const Cart = (props) => {
    const cart = props.cart;
 
-   const user = useContext(UserContext )
-   console.log(user);
+   // const user = useContext(UserContext )
+   // console.log(user);
 
    const total = cart.reduce( (total, prd)=>(total + prd.price * prd.quantity),0); // not multiple quantity * prd.price
 
@@ -47,7 +46,6 @@ const Cart = (props) => {
          {
             props.children
          }
-         <h5>{user}</h5>
       </div>
    );
 };
