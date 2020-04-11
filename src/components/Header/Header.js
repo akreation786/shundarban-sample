@@ -16,7 +16,7 @@ const usePrevious = value =>{
 
 const Header = () => {
     const auth = useAuth();
-    console.log(auth);
+    // console.log(auth);
     const [count, setCount] = useState(0);
     const previous = usePrevious(count);
     return (
@@ -29,7 +29,7 @@ const Header = () => {
             <nav>
                 <a href="/shop">Shop</a>
                 <a href="/review">Review</a>
-                <a href="/manage">Manage Inventory Here</a>
+                <a href="/inventory">Inventory</a>
                 {
                     auth.user && <span style={{color: '#ddd'}}> Welcome <span style={{color: 'goldenrod'}}>{auth.user.Name}</span></span>
                 }

@@ -2,13 +2,30 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import '../../components/Shipment/Shipment.css'
 import { useAuth } from '../Login/useAuth';
+import { getDatabaseCart, processOrder } from '../../utilities/databaseManager';
 
 const Shipment = () => {
-   const { register, handleSubmit, watch, errors } = useForm();
-   const onSubmit = data => { console.log(data) }
-    const auth = useAuth();
-    console.log(auth.user.Name);
-   console.log(watch('example')) // watch input value by passing the name of it
+   const { register, handleSubmit, errors } = useForm();
+   const auth = useAuth();
+   const onSubmit = data => {
+    // TODO: riaz move this after payment
+    const saveCart = getDatabaseCart();
+    const orderDetails = {email:auth.user.email, cart: saveCart};
+      fetch('http://localhost:4000/placeOrder', {
+        method: 'POST', 
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(orderDetails) 
+      })
+      .then(res => res.json())
+      .then(data =>{
+        alert('Successfuly Placed Your order with order Id: ' + data._id)
+        processOrder();
+      })
+   }
+    // console.log(auth.user.Name);
+  //  console.log(watch('example')) // watch input value by passing the name of it
  
    return (
      

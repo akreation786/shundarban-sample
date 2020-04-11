@@ -14,11 +14,12 @@ import ProductDetail from './components/ProductDetail/ProductDetail';
 import Login from './components/Login/Login';
 import { AuthContextProvider, PrivateRoute } from './components/Login/useAuth';
 import Shipment from './components/Shipment/Shipment';
+import Inventory from './components/Inventory/Inventory';
 
 
 
 function App() {
-  // const user = {name: 'koduMia', Email: 'kodumia@gmail.com'}
+  // const user = {name: 'koduMia', Email: 'kodumia@gmail.com'
   return (
     <>
       <AuthContextProvider>
@@ -30,6 +31,9 @@ function App() {
             </Route>
             <Route path="/review">
               <Review></Review>
+            </Route>
+            <Route path="/inventory">
+              <Inventory></Inventory>
             </Route>
             <Route exact path="/">
               <Shop></Shop>

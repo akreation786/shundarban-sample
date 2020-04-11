@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import fakeData from '../../fakeData';
 import './Shop.css';
 import Product from '../Product/product';
 import Cart from '../cart/cart';
@@ -9,27 +8,31 @@ import { Link } from 'react-router-dom';
 
 
 const Shop = () => {
-    const first10 = fakeData.slice(0, 10);
-    const [Products, setProducts] = useState(first10)
+    // const first10 = fakeData.slice(0, 10);
+    const [products, setProducts] = useState([])
     const [cart, setCart] = useState([])
+    useEffect(() => {
+        fetch('http://localhost:4000/products')
+        .then(res => res.json())
+        .then(data => {
+            setProducts(data);
+            console.log(products);
+        })
+    })
 
     useEffect(()=>{
         const savedCart = getDatabaseCart();
         const productKeys = Object.keys(savedCart);
-        const previousCart = productKeys.map(existingKey =>{
-            const product = fakeData.find(pd => pd.key === existingKey);
-            product.quantity = savedCart[existingKey];
-            return product;
-        })
-        console.log(setProducts);
-        setCart(previousCart);
-        const cartProducts = productKeys.map(key => {
-            const product = fakeData.find(pd => pd.key === key);
-            product.quantity = savedCart[key];
-            return product;
-        });
-        setCart(cartProducts);
-    },[])
+        console.log(products);
+        if(products.length > 0){
+            const previousCart = productKeys.map(existingKey =>{
+                const product = products.find(pd => pd.key === existingKey);
+                product.quantity = savedCart[existingKey];
+                return product;
+            })
+            setCart(previousCart);
+        }
+    },[products])
 
     const handleAddProduct = (product) => {
         const toBeAddedKey = product.key;
@@ -52,7 +55,7 @@ const Shop = () => {
         <div className="shop_container">
             <div className="product_container">
                 {
-                    Products.map(singleProduct => <Product
+                    products.map(singleProduct => <Product
                         key={singleProduct.key}
                         showAddToCart={true} //from 25.5 - 09:33 
                         handleAddProduct = {handleAddProduct}
